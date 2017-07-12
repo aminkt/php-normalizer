@@ -1,0 +1,21 @@
+{
+    "name": "aminkt/normalizer",
+    "description": "Normalize mobile, telephone, date, address, postcode. national number and ... . And validate them.  Star",
+    "type": "library",
+    "keywords": ["normalizer ","mobile normalizer"," national normalizer"," telephone"," date"," address"," postcode"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Amin Keshavarz",
+            "email": "ak_1596@yahoo.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "aminkt\\normalizer\\": ""
+        }
+    }
+}
