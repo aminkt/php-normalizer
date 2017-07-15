@@ -21,7 +21,7 @@ class Normalize extends \Normalizer
      */
     public static function normalizeMobile($mobile, $strategy = self::STRATEGY_BY_COUNTRY_CODE, $countryCode = '98')
     {
-        if (preg_match('#(\+?\d{1-3}|0|00)(\d{10})$#is', $mobile, $matches)) {
+        if (preg_match('#^(\+?\d{1,3}|0{1,2})(\d{10})$#is', $mobile, $matches)) {
             $phone = $matches[2];
             $cc = $matches[1];
 
