@@ -21,7 +21,7 @@ class Normalize extends \Normalizer
      */
     public static function normalizeMobile($mobile, $strategy = self::STRATEGY_BY_COUNTRY_CODE, $countryCode = '98')
     {
-        if (preg_match('#^(\+?\d{1,3}|0{1,2})(\d{10})$#is', $mobile, $matches)) {
+        if (preg_match('#^(\+?\d{1,3}|0|00\d{1,3})(\d{10})$#is', $mobile, $matches)) {
             $phone = $matches[2];
             $cc = $matches[1];
 
@@ -36,5 +36,41 @@ class Normalize extends \Normalizer
             }
         }
         return false;
+    }
+
+    /**
+     * Convert persian and arabic numbers to english.
+     *
+     * @param string $number
+     *
+     * @return string
+     */
+    public static function englishNumbers($number){
+        $persian = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+
+        $num = range(0, 9);
+        $convertedPersianNums = str_replace($persian, $num, $number);
+        $englishNumbersOnly = str_replace($arabic, $num, $convertedPersianNums);
+
+        return $englishNumbersOnly;
+    }
+
+    /**
+     * Convert english and arabic numbers to persian.
+     *
+     * @param string $number
+     *
+     * @return static
+     */
+    public static function persianNumbers($number){
+        $num = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $arabic = ['٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'];
+
+        $english = range(0, 9);
+        $convertArabicNumbers = str_replace($arabic, $num, $number);
+        $persianNumbers = str_replace($english, $num, $convertArabicNumbers);
+
+        return $persianNumbers;
     }
 }
