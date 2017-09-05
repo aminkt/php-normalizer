@@ -61,7 +61,7 @@ class Normalize extends \Normalizer
      *
      * @param string $number
      *
-     * @return static
+     * @return string
      */
     public static function persianNumbers($number){
         $num = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
