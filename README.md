@@ -40,7 +40,7 @@ Normalizer:
 
 Validators: 
 
-[Amin Keshavarz](keshavarz.pro) [amin@kehsvarz.pro](mailto:amin@kehsvarz.pro)
+[Amin Keshavarz](http://keshavarz.pro) [amin@kehsvarz.pro](mailto:amin@kehsvarz.pro)
 
 [Mojtaba Anisi](mailto:geevepahlavan@yahoo.com)
 
