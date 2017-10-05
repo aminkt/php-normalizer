@@ -3,7 +3,10 @@
 namespace aminkt\normalizer;
 
 /**
- * This is just an example.
+ * Normalizer
+ *
+ * @author Amin keshavarz <Amin@keshavarz.pro>
+ * @package \aminkt\normalizer
  */
 class Normalize extends \Normalizer
 {
@@ -72,5 +75,25 @@ class Normalize extends \Normalizer
         $persianNumbers = str_replace($english, $num, $convertArabicNumbers);
 
         return $persianNumbers;
+    }
+
+    /**
+     * Normalize IBAN number to standard same IR810140040000410019300608
+     *
+     * @param $iban
+     *
+     * @return string
+     */
+    public static function normalizeIBAN($iban)
+    {
+        $shaba = strtoupper($iban);
+        $shaba = str_replace(' ', '', $shaba);
+        $shaba = str_replace("\n", '', $shaba);
+        return $shaba;
+    }
+
+    public static function normalizeCreditCardNumber($cardNumber)
+    {
+        return str_replace([' ', '-', '/', '_', '\\'], '', $cardNumber);
     }
 }
