@@ -28,4 +28,20 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \aminkt\normalizer\Normalize::normalizeMobile($mobile); ?>```
+<?= \aminkt\normalizer\Normalize::normalizeMobile($mobile); ?>
+```
+
+
+Authors
+-------
+Normalizer:
+
+[Amin Keshavarz](keshavarz.pro) <amin@kehsvarz.pro>
+
+Validators: 
+
+[Amin Keshavarz](keshavarz.pro) [amin@kehsvarz.pro](mailto:amin@kehsvarz.pro)
+
+[Mojtaba Anisi](mailto:geevepahlavan@yahoo.com)
+
+[Shahrokh Niakan](mailto:sh.niakan@anetwork.ir)
