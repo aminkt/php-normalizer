@@ -8,7 +8,7 @@ namespace aminkt\normalizer;
  * @author Amin keshavarz <Amin@keshavarz.pro>
  * @package \aminkt\normalizer
  */
-class Normalize extends \Normalizer
+class Normalize
 {
     const STRATEGY_BY_ZERO = 1;
     const STRATEGY_BY_COUNTRY_CODE = 2;
