@@ -18,9 +18,10 @@ class Validation
      * @author Amin keshavarz <Amin@keshavarz.pro>
      * @since OCTOBER 5, 2017
      *
-     * @return boolean
+     * @return false|string False if false to validate otherwise return IABN.
      */
-    public static function checkIBAN($iban)
+
+    public static function validateIBAN($iban)
     {
         $iban = strtolower(Normalize::normalizeIBAN($iban));
         $Countries = array('ir' => '26', 'al' => 28, 'ad' => 24, 'at' => 20, 'az' => 28, 'bh' => 22, 'be' => 16, 'ba' => 20, 'br' => 29, 'bg' => 22, 'cr' => 21, 'hr' => 21, 'cy' => 28, 'cz' => 24, 'dk' => 18, 'do' => 28, 'ee' => 20, 'fo' => 18, 'fi' => 18, 'fr' => 27, 'ge' => 22, 'de' => 22, 'gi' => 23, 'gr' => 27, 'gl' => 18, 'gt' => 28, 'hu' => 28, 'is' => 26, 'ie' => 22, 'il' => 23, 'it' => 27, 'jo' => 30, 'kz' => 20, 'kw' => 30, 'lv' => 21, 'lb' => 28, 'li' => 21, 'lt' => 20, 'lu' => 20, 'mk' => 19, 'mt' => 31, 'mr' => 27, 'mu' => 30, 'mc' => 27, 'md' => 24, 'me' => 22, 'nl' => 18, 'no' => 15, 'pk' => 24, 'ps' => 29, 'pl' => 28, 'pt' => 25, 'qa' => 29, 'ro' => 24, 'sm' => 27, 'sa' => 24, 'rs' => 22, 'sk' => 24, 'si' => 19, 'es' => 24, 'se' => 24, 'ch' => 21, 'tn' => 24, 'tr' => 26, 'ae' => 23, 'gb' => 22, 'vg' => 24);
@@ -41,7 +42,7 @@ class Validation
             }
 
             if (bcmod($NewString, '97') == 1) {
-                return true;
+                return $iban;
             } else {
                 return false;
             }
@@ -50,6 +51,68 @@ class Validation
         }
     }
 
+    /**
+     * Validate and normalaize shaba number.
+     *
+     * @author Amin keshavarz <Amin@keshavarz.pro>
+     * @since OCTOBER 5, 2017
+     *
+     * @deprecated User validateIBAN instead this method.
+     *
+     * @return boolean
+     */
+    public static function checkIBAN($iban)
+    {
+        if (self::validateIBAN($iban))
+            return true;
+        return false;
+    }
+
+    /**
+     * payment card number validation
+     * depending on 'http://www.aliarash.com/article/creditcart/credit-debit-cart.htm' article
+     *
+     * @param $value
+     * @author Mojtaba Anisi <geevepahlavan@yahoo.com>
+     * @since Oct 1, 2016
+     * @return false|string False if false to validate otherwise return IABN.
+     */
+    public static function validateCreditCard($value)
+    {
+        $value = Normalize::normalizeCreditCardNumber($value);
+        if (!preg_match('/^\d{16}$/', $value)) {
+            return false;
+        }
+        $sum = 0;
+        for ($position = 1; $position <= 16; $position++) {
+            $temp = $value[$position - 1];
+            $temp = $position % 2 === 0 ? $temp : $temp * 2;
+            $temp = $temp > 9 ? $temp - 9 : $temp;
+            $sum += $temp;
+        }
+        if ((bool)($sum % 10 === 0))
+            return $value;
+
+        return false;
+    }
+
+    /**
+     * payment card number validation
+     * depending on 'http://www.aliarash.com/article/creditcart/credit-debit-cart.htm' article
+     *
+     * @param $value
+     *
+     * @author Mojtaba Anisi <geevepahlavan@yahoo.com>
+     * @since Oct 1, 2016
+     *
+     * @deprecated Use `validateCreditCard` instead of this method.
+     *
+     * @return boolean
+     */
+    static function cardNumber($value)
+    {
+        return self::validateCreditCard($value) ? true : false;
+    }
     /**
      * validate persian alphabet and space
      *
@@ -106,9 +169,13 @@ class Validation
 
     /**
      * validate sheba number
+     *
      * @param $value
      * @author Shahrokh Niakan <sh.niakan@anetwork.ir>
      * @since May 21, 2016
+     *
+     * @deprecated User validateIBAN instead this method.
+     *
      * @return boolean
      */
     public static function sheba($value)
@@ -144,7 +211,7 @@ class Validation
     }
 
     /**
-     * validate meliCode number
+     * Validate National ID
      * @param $value
      * @author Shahrokh Niakan <sh.niakan@anetwork.ir>
      * @since May 21, 2016
@@ -241,31 +308,6 @@ class Validation
     public static function iranPhone($value)
     {
         return (bool)preg_match('/^[2-9][0-9]{7}+$/', $value);
-    }
-
-    /**
-     * payment card number validation
-     * depending on 'http://www.aliarash.com/article/creditcart/credit-debit-cart.htm' article
-     *
-     * @param $value
-     * @author Mojtaba Anisi <geevepahlavan@yahoo.com>
-     * @since Oct 1, 2016
-     * @return boolean
-     */
-    static function cardNumber($value)
-    {
-        $value = Normalize::normalizeCreditCardNumber($value);
-        if (!preg_match('/^\d{16}$/', $value)) {
-            return false;
-        }
-        $sum = 0;
-        for ($position = 1; $position <= 16; $position++) {
-            $temp = $value[$position - 1];
-            $temp = $position % 2 === 0 ? $temp : $temp * 2;
-            $temp = $temp > 9 ? $temp - 9 : $temp;
-            $sum += $temp;
-        }
-        return (bool)($sum % 10 === 0);
     }
 
     /**
