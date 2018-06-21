@@ -92,8 +92,51 @@ class Normalize
         return $shaba;
     }
 
+    /**
+     * Normailize card number.
+     *
+     * @param $cardNumber
+     *
+     * @return mixed
+     */
     public static function normalizeCreditCardNumber($cardNumber)
     {
         return str_replace([' ', '-', '/', '_', '\\'], '', $cardNumber);
+    }
+
+    /**
+     * Changes arabic letters with persian letters
+     *
+     * @param $attribute
+     *
+     * @return mixed
+     *
+     * @author Pooria Anvari <masonalex540@gmail.com>
+     */
+    public static function arabicToPersian($value)
+    {
+        $characters = [
+            'ك' => 'ک',
+            'دِ' => 'د',
+            'بِ' => 'ب',
+            'زِ' => 'ز',
+            'ذِ' => 'ذ',
+            'شِ' => 'ش',
+            'سِ' => 'س',
+            'ى' => 'ی',
+            'ي' => 'ی',
+            '١' => '۱',
+            '٢' => '۲',
+            '٣' => '۳',
+            '٤' => '۴',
+            '٥' => '۵',
+            '٦' => '۶',
+            '٧' => '۷',
+            '٨' => '۸',
+            '٩' => '۹',
+            '٠' => '۰',
+        ];
+
+        return str_replace(array_keys($characters), array_values($characters), $value);
     }
 }
